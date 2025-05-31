@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ff5e62, #f7b733);
+    position: relative;
+    overflow-y: auto; /* Đảm bảo có thể scroll nếu nội dung dài */
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/cubes.png');
+    opacity: 0.05;
+    z-index: 1; /* Đặt texture dưới cùng */
+}
+
+.container {
+    position: relative;
+    z-index: 2; /* Đảm bảo container nằm trên texture */
+    background: rgba(255, 255, 255, 0.97);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 450px;
+    animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+    text-align: center;
+    color: #ff5e62;
+    margin-bottom: 30px;
+    font-weight: 600;
+    font-size: 28px;
+    letter-spacing: 1px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    background: #f8f9fd;
+    font-size: 15px;
+    color: #333;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+input:focus {
+    outline: none;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(255, 94, 98, 0.2);
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(45deg, #ff5e62, #f7b733);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 94, 98, 0.4);
+    position: relative;
+    z-index: 3; /* Đảm bảo nút nằm trên cùng */
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 94, 98, 0.5);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(255, 94, 98, 0.3);
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+    position: relative;
+    z-index: 3; /* Đảm bảo link nằm trên cùng */
+}
+
+.login-link a {
+    color: #ff5e62;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.login-link a:hover {
+    color: #e04e52;
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 15px;
+        padding: 25px;
+    }
+}

@@ -1,0 +1,274 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Định dạng chung */
+body {
+  font-family: Arial, sans-serif;
+}
+/*index
+/* Container chính */
+.container {
+  display: flex;
+  width: 90%;
+  margin: 20px auto;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 25%;
+  padding: 15px;
+  background: #f4f4f4;
+  border-radius: 10px;
+}
+
+.sidebar h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li {
+  font-size: 16px;
+  margin: 8px 0;
+  font-weight: bold;
+}
+
+.sidebar ul ul {
+  margin-left: 15px;
+}
+
+.sidebar ul ul li {
+  font-weight: normal;
+}
+
+.sidebar ul li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidebar input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Danh sách sản phẩm */
+.product-list {
+  width: 75%;
+  padding: 15px;
+}
+
+.product-list h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.product {
+  background: white;
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.product img {
+  width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+}
+
+.product p {
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.product .price {
+  font-size: 16px;
+  font-weight: bold;
+  color: red;
+}
+
+.product button {
+  background: #ff6600;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+/*index
+
+/* Header */
+header {
+  background: white;
+  padding: 10px 20px;
+}
+
+/* Thanh trên cùng chứa logo, tìm kiếm và thông tin liên hệ */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+  height: 50px;
+  width: 150px;
+}
+
+/* Ô tìm kiếm */
+.search-form {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  margin-left: 20px; /* Khoảng cách giữa logo và ô tìm kiếm */
+}
+
+.search-form input {
+  border: none;
+  outline: none;
+  padding: 5px;
+  width: 300px;
+}
+
+.search-form button {
+  background: #ff6600;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+}
+
+/* Thông tin liên hệ */
+.contact-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 14px;
+}
+
+/* Thanh menu ngang */
+nav.menu {
+  background: #ff6600;
+  margin-top: 10px; /* Khoảng cách giữa top-bar và menu */
+}
+
+nav.menu ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+}
+
+nav.menu li {
+  padding: 15px 20px;
+}
+
+nav.menu a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  display: block;
+}
+
+nav.menu a:hover {
+  text-decoration: underline;
+}
+
+/* Định dạng giỏ hàng */
+nav.menu li:last-child {
+  margin-left: auto;
+}
+/*header*/
+
+/*footer*/
+footer {
+    background: #222;
+    color: #fff;
+    padding: 20px 0;
+    font-size: 14px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+}
+
+.footer-section h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #555;
+    padding-bottom: 5px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 5px 0;
+}
+
+.footer-section ul li a {
+    color: #bbb;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color: #fff;
+}
+
+.social-icons a {
+    display: block;
+    color: #bbb;
+    text-decoration: none;
+    margin: 5px 0;
+}
+
+.social-icons a:hover {
+    color: #fff;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 10px 0;
+    border-top: 1px solid #444;
+    margin-top: 10px;
+}
+/*footer*/
+
+/*Đăng nhập đăng ký*/
+
+/*Đăng nhập đăng ký*/

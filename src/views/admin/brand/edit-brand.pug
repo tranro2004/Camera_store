@@ -1,0 +1,13 @@
+extends ../admin-layout
+
+block content
+  h1 Chỉnh sửa thương hiệu
+
+  form(action=`/admin/brands/edit/${brand.id}` method="POST")
+    label(for="name") Tên thương hiệu:
+    input(type="text" name="name" value=brand.name required)
+
+    label(for="description") Mô tả:
+    textarea(name="description")= brand.description
+
+    button(type="submit") Cập nhật thương hiệu

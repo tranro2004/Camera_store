@@ -1,0 +1,45 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Thêm sản phẩm mới
+    link(rel="stylesheet", href="/css/product.css")
+  body
+    .container
+      if messages.success
+        div.alert.alert-success #{messages.success}
+      if messages.error
+        div.alert.alert-danger #{messages.error}
+      h1 Thêm sản phẩm mới
+      
+      form(action="/admin/products" method="POST" enctype="multipart/form-data")
+        .form-group
+          label(for="name") Tên sản phẩm:
+          input(type="text" name="name" id="name" required)
+
+        .form-group
+          label(for="description") Mô tả:
+          textarea(name="description" id="description" rows="3" required)
+
+        .form-group
+          label(for="price") Giá:
+          input(type="number" name="price" id="price" required step="1000")
+
+        .form-group
+          label(for="quantity") Số lượng:
+          input(type="number" name="quantity" id="quantity" required min="1")
+
+        .form-group
+          label(for="category_id") Danh mục (ID):
+          input(type="number" name="category_id" id="category_id" required)
+
+        .form-group
+          label(for="brand_id") Thương hiệu (ID):
+          input(type="number" name="brand_id" id="brand_id" required)
+
+        .form-group
+          label(for="image_url") Hình ảnh:
+          input(type="file" name="image_url" id="image_url" required)
+
+        button.btn.btn-success(type="submit") Thêm sản phẩm

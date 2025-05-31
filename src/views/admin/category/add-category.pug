@@ -1,0 +1,13 @@
+extends ../admin-layout
+
+block content
+  h1 Thêm danh mục mới
+
+  form(action="/admin/categories/add" method="POST")
+    label(for="name") Tên danh mục:
+    input(type="text" name="name" required)
+
+    label(for="description") Mô tả:
+    textarea(name="description")
+
+    button(type="submit") Thêm danh mục

@@ -1,0 +1,13 @@
+extends ../admin-layout
+
+block content
+  h1 Thêm thương hiệu mới
+
+  form(action="/admin/brands/add" method="POST")
+    label(for="name") Tên thương hiệu:
+    input(type="text" name="name" required)
+
+    label(for="description") Mô tả:
+    textarea(name="description")
+
+    button(type="submit") Thêm thương hiệu

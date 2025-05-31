@@ -1,0 +1,56 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Đăng ký tài khoản
+    link(rel="stylesheet" href="/css/dk.css")
+    script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
+  body
+    .container
+      h2 Đăng ký tài khoản
+      form#registerForm
+        .form-group
+          label(for="name") Họ và Tên:
+          input(type="text" id="name" required placeholder="Nhập họ và tên")
+        
+        .form-group
+          label(for="email") Email:
+          input(type="email" id="email" required placeholder="Nhập email")
+        
+        .form-group
+          label(for="phone") Số điện thoại:
+          input(type="text" id="phone" required placeholder="Nhập số điện thoại")
+        
+        .form-group
+          label(for="address") Địa chỉ:
+          input(type="text" id="address" required placeholder="Nhập địa chỉ")
+        
+        .form-group
+          label(for="password") Mật khẩu:
+          input(type="password" id="password" required placeholder="Nhập mật khẩu")
+        
+        button(type="submit") Đăng ký
+      
+      .login-link
+        p Đã có tài khoản? 
+          a(href="/login") Đăng nhập ngay
+
+    script.
+      document.getElementById("registerForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        const address = document.getElementById("address").value;
+        const password = document.getElementById("password").value;
+
+        axios.post("/api/users/register", { name, email, phone, address, password })
+          .then(response => {
+            alert(response.data.message);
+            window.location.href = response.data.redirect;
+          })
+          .catch(error => {
+            alert(error.response.data.error || "Lỗi đăng ký!");
+          });
+      });

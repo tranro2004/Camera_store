@@ -1,0 +1,42 @@
+doctype html
+html
+  head
+    title Đăng nhập
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet" href="/css/login.css")
+  body
+    .login-container
+      h1 Trang đăng nhập
+      form(action="/api/users/login" method="POST" id="loginForm")
+        .form-group
+          label(for="email") Email:
+          input(type="email" name="email" id="email" required)
+        .form-group
+          label(for="password") Mật khẩu:
+          input(type="password" name="password" id="password" required)
+        button(type="submit") Đăng nhập
+      p Chưa có tài khoản?
+        a(href="/register") Đăng ký ngay
+
+    script.
+      document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        fetch("/api/users/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            alert(data.error);
+          } else {
+            window.location.href = "/";
+          }
+        })
+        .catch(error => console.error("Lỗi:", error));
+      });

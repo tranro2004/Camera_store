@@ -1,0 +1,30 @@
+doctype html
+html
+  head
+    title Admin Dashboard
+    link(rel="stylesheet" href="/css/admin.css")
+  body
+    nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+      a.navbar-brand(href="/admin") Admin Dashboard
+      button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation")
+        span.navbar-toggler-icon
+      #navbarNav.collapse.navbar-collapse
+        ul.navbar-nav
+          li.nav-item
+            a.nav-link(href="/admin/products") Quản lý Sản phẩm
+          li.nav-item
+            a.nav-link(href="/admin/users") Quản lý Người dùng
+          li.nav-item
+            a.nav-link(href="/admin/categories") Quản lý Danh mục
+          li.nav-item
+            a.nav-link(href="/admin/brands") Quản lý Thương hiệu
+          li.nav-item
+            a.nav-link(href="/admin/orders") Quản lý Đơn Hàng
+          li.nav-item
+            a.nav-link(href="/logout") Đăng xuất
+
+    .container.mt-4
+      block content
+
+    footer.text-center.mt-4
+      p Bản quyền © 2025 Camera Store. Mọi quyền được bảo lưu.

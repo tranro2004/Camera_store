@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1 Hồ sơ của bạn
+  p Tên: #{user.name}
+  p Email: #{user.email}
+
+  form(action="/update-profile" method="POST")
+    label(for="name") Tên mới:
+    input(type="text" name="name" value=user.name required)
+    label(for="email") Email:
+    input(type="email" name="email" value=user.email required)
+    button(type="submit") Cập nhật thông tin

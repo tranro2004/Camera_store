@@ -1,0 +1,44 @@
+extends ../admin-layout
+
+block content
+  .container.mt-4
+    h1.text-center.text-primary Quản lý Đơn hàng
+
+    .table-responsive
+      table.table.table-striped.table-hover.table-bordered.align-middle
+        thead.thead-dark
+          tr.text-center
+            th(style="width: 5%") ID
+            th(style="width: 20%") Khách hàng
+            th(style="width: 15%") Tổng giá
+            th(style="width: 15%") Thanh toán
+            th(style="width: 15%") Trạng thái
+            th(style="width: 15%") Ngày đặt hàng
+            th(style="width: 15%") Hành động
+        tbody
+          if orders && orders.length > 0
+            each order in orders
+              tr
+                td.text-center #{order.order_id}
+                td #{order.customer_name}
+                td.text-end #{order.total_price.toLocaleString('vi-VN')} đ
+                td.text-center #{order.payment_method === 'credit_card' ? 'Thẻ tín dụng' : 'Thanh toán khi nhận hàng'}
+                td.text-center
+                  span.badge(class=order.status === 'processing' ? 'bg-warning text-dark' : 'bg-success') 
+                    | #{order.status === 'processing' ? 'Đang xử lý' : 'Hoàn thành'}
+                td.text-center #{new Date(order.created_at).toLocaleString('vi-VN')}
+                td.text-center
+                  .btn-group
+                    a.btn.btn-primary.btn-sm(href=`/admin/orders/order-detail/${order.order_id}` title="Xem chi tiết")
+                      i.bi.bi-eye-fill.me-1
+                      | Xem
+                    form(method="POST" action=`/admin/orders/update-status/${order.order_id}` style="display:inline; margin-left:5px;")
+                      select.form-select.form-select-sm.d-inline-block.me-2(name="status" required style="width: auto;")
+                        option(value="processing" selected=order.status === 'processing') Đang xử lý
+                        option(value="completed" selected=order.status === 'completed') Hoàn thành
+                      button.btn.btn-success.btn-sm(type="submit" title="Cập nhật trạng thái")
+                        i.bi.bi-check-circle-fill.me-1
+                        | Cập nhật
+          else
+            tr
+              td(colspan="7" class="text-center text-muted") Không có đơn hàng nào.

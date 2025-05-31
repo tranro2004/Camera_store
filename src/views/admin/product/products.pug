@@ -1,0 +1,63 @@
+extends ../admin-layout
+
+block content
+  .container.mt-4
+    h1.text-center.text-primary Quản lý Sản phẩm
+
+    .d-flex.justify-content-between.align-items-center.mb-3
+      a.btn.btn-success(href="/admin/products/add") 
+        i.bi.bi-plus-circle.me-1
+        | Thêm sản phẩm mới
+
+    .table-responsive
+      table.table.table-striped.table-hover.table-bordered.align-middle
+        thead.thead-dark
+          tr.text-center
+            th(style="width: 5%") ID
+            th(style="width: 30%") Tên sản phẩm
+            th(style="width: 15%") Giá
+            th(style="width: 10%") Số lượng
+            th(style="width: 20%") Hình ảnh
+            th(style="width: 20%") Hành động
+        tbody
+          if products && products.length > 0
+            each product in products
+              tr
+                td.text-center #{product.product_id}
+                td #{product.name}
+                td.text-end #{product.price.toLocaleString('vi-VN')} đ
+                td.text-center #{product.quantity}
+                td.text-center
+                  img(src=`/uploads/${product.image_url}` alt=product.name class="rounded shadow-sm" width="60" height="60")
+                td.text-center
+                  a.btn.btn-primary.btn-sm.me-2(href=`/admin/products/edit/${product.product_id}`)
+                    i.bi.bi-pencil-square.me-1
+                    | Sửa
+                  button.btn.btn-danger.btn-sm(onclick=`deleteProduct(${product.product_id})`)
+                    i.bi.bi-trash3-fill.me-1
+                    | Xóa
+          else
+            tr
+              td(colspan="6" class="text-center text-muted") Không có sản phẩm nào.
+
+  script.
+    async function deleteProduct(productId) {
+      if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+        try {
+          const response = await fetch(`/admin/products/${productId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+          });
+          const result = await response.json();
+          if (result.success) {
+            alert('Xóa sản phẩm thành công!');
+            location.reload();
+          } else {
+            alert('Lỗi khi xóa sản phẩm: ' + result.message);
+          }
+        } catch (error) {
+          console.error('Lỗi khi xóa sản phẩm:', error);
+          alert('Đã xảy ra lỗi khi xóa sản phẩm');
+        }
+      }
+    }

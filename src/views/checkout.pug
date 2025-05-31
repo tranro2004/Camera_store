@@ -1,0 +1,135 @@
+extends layout
+
+block content
+  h1.text-center.text-primary.mb-5 Thanh toán
+
+  if cartItems && cartItems.length
+    .table-responsive
+      table.table.table-bordered.table-striped.align-middle
+        thead.thead-dark
+          tr.text-center
+            th Tên sản phẩm
+            th Giá
+            th Số lượng
+            th Tổng
+        tbody
+          each item in cartItems
+            tr
+              td #{item.productName}
+              td.text-end #{item.price.toLocaleString('vi-VN')} đ
+              td.text-center #{item.quantity}
+              td.text-end #{(item.total || 0).toLocaleString('vi-VN')} đ
+
+    .text-end.fw-bold.fs-5.mt-4 Tổng cộng: 
+      span.text-danger #{total ? total.toLocaleString('vi-VN') : 0} đ
+
+    // Payment Form
+    .card.shadow-lg.mt-5.p-4
+      .card-body
+        h2.text-center.text-secondary.mb-4 Thông tin thanh toán
+        form#checkout-form(method='POST' action='/api/orders/checkout' onsubmit='return handleCheckout(event)')
+          .row.g-3
+            .col-md-6
+              label.form-label(for='name') Họ và tên:
+              input.form-control(type='text' id='name' name='name' value=user && user.name ? user.name : '' required)
+
+            .col-md-6
+              label.form-label(for='email') Email:
+              input.form-control(type='email' id='email' name='email' value=user && user.email ? user.email : '' required)
+
+            .col-12
+              label.form-label(for='address') Địa chỉ:
+              input.form-control(type='text' id='address' name='address' value=user && user.address ? user.address : '' required)
+
+            .col-md-6
+              label.form-label(for='paymentMethod') Phương thức thanh toán:
+              select.form-select(id='paymentMethod' name='paymentMethod' required)
+                option(value='' disabled selected) -- Chọn phương thức thanh toán --
+                option(value='credit_card') Thẻ tín dụng
+                option(value='cash_on_delivery') Thanh toán khi nhận hàng
+
+          input(type='hidden' name='cartId' value=cartId || '')
+
+          .text-center
+            button.btn.btn-success.btn-lg.mt-4(type='submit')
+              i.bi.bi-credit-card.me-2
+              | Xác nhận thanh toán
+
+  else
+    .alert.alert-warning.text-center.mt-4 Giỏ hàng trống. Vui lòng thêm sản phẩm vào giỏ hàng trước khi thanh toán.
+
+  // Additional styling for better appearance
+  style.
+    h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #007bff;
+    }
+    .table th, .table td {
+      vertical-align: middle;
+      padding: 15px 20px;
+    }
+    .table th {
+      background-color: #343a40;
+      color: white;
+    }
+    .card {
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      margin-top: 30px;
+    }
+    .btn-success {
+      background-color: #28a745;
+      border-color: #28a745;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+    .btn-success:hover {
+      background-color: #218838;
+      border-color: #1e7e34;
+    }
+    .form-label {
+      font-weight: bold;
+      color: #495057;
+    }
+    .alert {
+      font-size: 1.2rem;
+      border-radius: 5px;
+    }
+    .table-responsive {
+      margin-bottom: 30px;
+    }
+    .card-body {
+      padding: 2rem;
+    }
+    .text-center {
+      text-align: center;
+    }
+    .text-danger {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    /* Additional form styling */
+    .form-control {
+      border-radius: 0.375rem;
+      border: 1px solid #ced4da;
+      padding: 0.75rem 1rem;
+    }
+    .form-select {
+      border-radius: 0.375rem;
+      padding: 0.75rem 1rem;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: #80bdff;
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+    }
+    .btn-lg {
+      padding: 1rem 2rem;
+      font-size: 1.25rem;
+    }
+    /* Style for larger screen sizes */
+    @media (min-width: 768px) {
+      .row.g-3 .col-md-6 {
+        margin-bottom: 1.5rem;
+      }
+    }

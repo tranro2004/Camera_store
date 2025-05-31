@@ -1,0 +1,25 @@
+extends ../admin-layout
+
+block content
+  h1 Quản lý Thương hiệu
+  a.btn.btn-success.mb-3(href="/admin/brands/add") Thêm thương hiệu mới
+
+  table.table.table-bordered
+    thead
+      tr
+        th ID
+        th Tên thương hiệu
+        th Hành động
+    tbody
+      if brands && brands.length > 0
+        each brand in brands
+          tr
+            td #{brand.id}
+            td #{brand.name}
+            td
+              a.btn.btn-primary.btn-sm(href=`/admin/brands/edit/${brand.id}`) Sửa
+              form(method="POST" action=`/admin/brands/delete/${brand.id}` style="display:inline;")
+                button.btn.btn-danger.btn-sm(type="submit") Xóa
+      else
+        tr
+          td(colspan="3" class="text-center") Không có thương hiệu nào

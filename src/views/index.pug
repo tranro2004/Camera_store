@@ -1,0 +1,83 @@
+extends layout
+
+block content
+  .container
+    .sidebar
+      h2 Lọc sản phẩm
+      .filters
+        // Categories
+        h3 Danh mục
+        ul
+          each category in categories
+            li
+              input(type='checkbox', name='category_id', value=category.id, data-filter='category')
+              label #{category.name}
+
+        // Brands
+        h3 Thương hiệu
+        ul
+          each brand in brands
+            li
+              input(type='checkbox', name='brand_id', value=brand.id, data-filter='brand')
+              label #{brand.name}
+
+    .product-list
+      h2 Sản phẩm
+      .products
+        if products && products.length > 0
+          each product in products
+            .product
+              a(href=`/product-detail/${product.product_id}`)
+                img(src=`/uploads/${product.image_url}` alt=product.name)
+              p #{product.name}
+              span.price #{product.price} đ
+              button MUA NGAY
+        else
+          p Không có sản phẩm nào
+
+  script.
+    document.addEventListener('DOMContentLoaded', () => {
+      const checkboxes = document.querySelectorAll('.filters input[type="checkbox"]');
+      const productList = document.querySelector('.products');
+
+      const fetchFilteredProducts = async () => {
+        const selectedCategories = Array.from(document.querySelectorAll('input[name="category_id"]:checked')).map(cb => cb.value);
+        const selectedBrands = Array.from(document.querySelectorAll('input[name="brand_id"]:checked')).map(cb => cb.value);
+
+        const queryParams = new URLSearchParams();
+        if (selectedCategories.length > 0) queryParams.append('category_id', selectedCategories.join(','));
+        if (selectedBrands.length > 0) queryParams.append('brand_id', selectedBrands.join(','));
+
+        try {
+          const response = await fetch(`/api/products?${queryParams.toString()}`);
+          const data = await response.json();
+
+          // Clear the product list
+          productList.innerHTML = '';
+
+          if (data.success && data.data.length > 0) {
+            data.data.forEach(product => {
+              const productElement = document.createElement('div');
+              productElement.classList.add('product');
+              productElement.innerHTML = `
+                <a href="/product-detail/${product.product_id}">
+                  <img src="/uploads/${product.image_url}" alt="${product.name}">
+                </a>
+                <p>${product.name}</p>
+                <span class="price">${product.price} đ</span>
+                <button>MUA NGAY</button>
+              `;
+              productList.appendChild(productElement);
+            });
+          } else {
+            productList.innerHTML = '<p>Không có sản phẩm nào</p>';
+          }
+        } catch (error) {
+          console.error('Error fetching filtered products:', error);
+        }
+      };
+
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', fetchFilteredProducts);
+      });
+    });

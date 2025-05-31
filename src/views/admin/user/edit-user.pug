@@ -1,0 +1,24 @@
+extends ../admin-layout
+
+block content
+  h1 Chỉnh sửa người dùng
+
+  form(action=`/admin/users/edit/${user.user_id}` method="POST")
+    label(for="name") Tên:
+    input(type="text" name="name" value=user.name required)
+
+    label(for="email") Email:
+    input(type="email" name="email" value=user.email required)
+
+    label(for="phone") Số điện thoại:
+    input(type="text" name="phone" value=user.phone)
+
+    label(for="address") Địa chỉ:
+    input(type="text" name="address" value=user.address)
+
+    label(for="role") Vai trò:
+    select(name="role" required)
+      option(value="user" selected=user.role === 'user') Người dùng
+      option(value="admin" selected=user.role === 'admin') Quản trị viên
+
+    button(type="submit") Cập nhật người dùng

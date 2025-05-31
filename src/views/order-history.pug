@@ -1,0 +1,36 @@
+extends layout  
+
+block content   
+  .container.order-history     
+    h1.section-title Lịch sử đơn hàng     
+    if orders && orders.length       
+      .order-list         
+        each order in orders           
+          .order-card             
+            .order-header               
+              span.order-id Đơn hàng ##{order.order_id}               
+              span.order-date Đặt ngày: #{new Date(order.created_at).toLocaleString('vi-VN')}             
+            .order-details               
+              .detail-row
+                strong Tổng giá:                  
+                span.price #{order.total_price.toLocaleString('vi-VN')} đ               
+              .detail-row
+                strong Phương thức thanh toán:                  
+                span #{order.payment_method === 'credit_card' ? 'Thẻ tín dụng' : 'Thanh toán khi nhận hàng'}               
+              .detail-row
+                strong Trạng thái:                  
+                span(class=`status status-${order.status}`) #{order.status === 'processing' ? 'Đang xử lý' : 'Hoàn thành'}             
+            .order-actions               
+              a.btn.btn-detail(href=`/api/orders/detail/${order.order_id}`) 
+                i.fa.fa-search
+                | Xem chi tiết
+    else       
+      .no-orders         
+        img.empty-cart-icon(src="/images/empty-cart.svg" alt="Giỏ hàng trống")
+        p Bạn chưa có đơn hàng nào.          
+        a.btn.btn-shop(href='/') 
+          i.fa.fa-shopping-bag
+          | Mua sắm ngay!
+
+  // Liên kết CSS ngoài
+  link(rel="stylesheet" href="/css/history.css")

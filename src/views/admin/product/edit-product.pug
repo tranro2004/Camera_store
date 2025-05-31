@@ -1,0 +1,28 @@
+extends ../admin-layout
+
+block content
+  h1 Chỉnh sửa sản phẩm
+
+  form(action=`/admin/products/${product.product_id}?_method=PUT` method="POST" enctype="multipart/form-data")
+    label(for="name") Tên sản phẩm:
+    input(type="text" name="name" value=product.name required)
+
+    label(for="description") Mô tả:
+    textarea(name="description" required)= product.description
+
+    label(for="price") Giá:
+    input(type="number" name="price" value=product.price required)
+
+    label(for="quantity") Số lượng:
+    input(type="number" name="quantity" value=product.quantity required)
+
+    label(for="category_id") Danh mục:
+    input(type="number" name="category_id" value=product.category_id required)
+
+    label(for="brand_id") Thương hiệu:
+    input(type="number" name="brand_id" value=product.brand_id required)
+
+    label(for="image_url") Hình ảnh:
+    input(type="file" name="image_url")
+
+    button(type="submit") Cập nhật sản phẩm

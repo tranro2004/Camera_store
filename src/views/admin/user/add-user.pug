@@ -1,0 +1,27 @@
+extends ../admin-layout
+
+block content
+  h1 Thêm người dùng mới
+
+  form(action="/admin/users/add" method="POST")
+    label(for="name") Tên:
+    input(type="text" name="name" required)
+
+    label(for="email") Email:
+    input(type="email" name="email" required)
+
+    label(for="phone") Số điện thoại:
+    input(type="text" name="phone")
+
+    label(for="address") Địa chỉ:
+    input(type="text" name="address")
+
+    label(for="password") Mật khẩu:
+    input(type="password" name="password" required)
+
+    label(for="role") Vai trò:
+    select(name="role" required)
+      option(value="user") Người dùng
+      option(value="admin") Quản trị viên
+
+    button(type="submit") Thêm người dùng

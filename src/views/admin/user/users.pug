@@ -1,0 +1,44 @@
+extends ../admin-layout
+
+block content
+  .container.mt-4
+    h1.text-center.text-primary Quản lý Người dùng
+
+    .d-flex.justify-content-between.align-items-center.mb-3
+      a.btn.btn-success(href="/admin/users/add") 
+        i.bi.bi-person-plus-fill.me-1 
+        | Thêm người dùng mới
+
+    .table-responsive
+      table.table.table-striped.table-hover.table-bordered.align-middle
+        thead.thead-dark
+          tr.text-center
+            th(style="width: 5%") ID
+            th(style="width: 15%") Tên
+            th(style="width: 20%") Email
+            th(style="width: 15%") Số điện thoại
+            th(style="width: 20%") Địa chỉ
+            th(style="width: 10%") Vai trò
+            th(style="width: 15%") Hành động
+        tbody
+          if users && users.length > 0
+            each user in users
+              tr
+                td.text-center #{user.user_id}
+                td #{user.name}
+                td #{user.email}
+                td.text-center #{user.phone}
+                td #{user.address}
+                td.text-center
+                  span.badge(class=user.role === 'admin' ? 'bg-danger' : 'bg-info') #{user.role}
+                td.text-center
+                  a.btn.btn-primary.btn-sm.me-1(href=`/admin/users/edit/${user.user_id}`)
+                    i.bi.bi-pencil-square.me-1
+                    | Sửa
+                  form(method="POST" action=`/admin/users/delete/${user.user_id}` style="display:inline;")
+                    button.btn.btn-danger.btn-sm(type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa?');")
+                      i.bi.bi-trash3-fill.me-1
+                      | Xóa
+          else
+            tr
+              td(colspan="7" class="text-center text-muted") Không có người dùng nào.

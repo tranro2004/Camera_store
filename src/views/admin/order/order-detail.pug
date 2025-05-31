@@ -1,0 +1,41 @@
+extends ../admin-layout
+
+block content
+  .container.order-detail
+    h1 Chi tiết Đơn hàng ##{order ? order.order_id : 'Không tìm thấy'}
+    if order
+      .order-summary
+        .order-header
+          span.order-date Đặt ngày: #{new Date(order.created_at).toLocaleString('vi-VN')}
+          span.order-status Trạng thái: 
+            span(class=order.status === 'processing' ? 'status-processing' : 'status-completed') #{order.status === 'processing' ? 'Đang xử lý' : 'Hoàn thành'}
+        .order-info
+          p
+            strong Tổng giá: 
+            span #{order.total_price.toLocaleString('vi-VN')} đ
+          p
+            strong Phương thức thanh toán: 
+            span #{order.payment_method === 'credit_card' ? 'Thẻ tín dụng' : 'Thanh toán khi nhận hàng'}
+
+      if items && items.length
+        h2 Sản phẩm trong đơn hàng
+        table.table.table-bordered
+          thead
+            tr
+              th Tên sản phẩm
+              th Số lượng
+              th Giá
+              th Tổng
+          tbody
+            each item in items
+              tr
+                td #{item.name}
+                td #{item.quantity}
+                td #{item.price.toLocaleString('vi-VN')} đ
+                td #{item.total.toLocaleString('vi-VN')} đ
+      else
+        p Không có sản phẩm trong đơn hàng này.
+    else
+      .not-found
+        p Đơn hàng không tồn tại hoặc bạn không có quyền xem.
+        a.btn.btn-back(href='/api/orders/history') Quay lại lịch sử đơn hàng

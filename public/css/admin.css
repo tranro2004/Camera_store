@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+/* Reset cơ bản */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: linear-gradient(90deg, #6cce7a, #c16edd);
+    color: #e2e8f0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Navbar */
+.navbar {
+    background: linear-gradient(90deg, #c76cdd, #36c736);
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 20px rgba(199, 110, 204, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #a5b4fc !important;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+    color: #818cf8 !important;
+}
+
+.navbar-nav {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.nav-item {
+    margin: 0 10px;
+    position: relative;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    color: #cbd5e1 !important;
+    font-weight: 400;
+    padding: 0.6rem 1.2rem !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-link i {
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
+
+.nav-link:hover {
+    background: #a5b4fc;
+    color: #fff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(165, 180, 252, 0.3);
+}
+
+/* Hiệu ứng gạch chân khi hover */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #a5b4fc;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 60%;
+}
+
+.navbar-toggler {
+    border: none;
+    padding: 0.5rem;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(165, 180, 252, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Container */
+.container {
+    max-width: 1300px;
+    margin: 2rem auto;
+    padding: 20px;
+    background: #d07bef;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer */
+footer {
+    background: #ed9bc0;
+    color: #94a3b8;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+footer p {
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .navbar-nav {
+        margin-top: 1rem;
+        text-align: center;
+        background: #1e1e2f;
+        padding: 1rem;
+        border-radius: 8px;
+    }
+
+    .nav-item {
+        margin: 0.5rem 0;
+    }
+
+    .nav-link {
+        padding: 0.8rem 1rem !important;
+        justify-content: center;
+    }
+
+    .nav-link::after {
+        display: none; /* Ẩn gạch chân trên mobile */
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar {
+        padding: 0.8rem 1rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+
+    .container {
+        margin: 1rem auto;
+        padding: 15px;
+    }
+}

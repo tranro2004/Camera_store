@@ -1,0 +1,29 @@
+doctype html
+html
+    head
+        title Thêm sản phẩm
+    body
+        h1 Form thêm sản phẩm
+        form(action="/api/products" method="post" enctype="multipart/form-data")
+            label(for="image_url") Chọn ảnh:
+            input(type="file" name="image_url")
+            br
+            label(for="name") Tên sản phẩm:
+            input(type="text" name="name")
+            br
+            label(for="description") Mô tả:
+            input(type="text" name="description")
+            br
+            label(for="price") Giá:
+            input(type="number" name="price")
+            br
+            label(for="quantity") Số lượng:
+            input(type="number" name="quantity")
+            br
+            label(for="category") Danh mục:
+            input(type="text" name="category")
+            br
+            label(for="brand") Thương hiệu:
+            input(type="text" name="brand")
+            br
+            button(type="submit") Thêm sản phẩm

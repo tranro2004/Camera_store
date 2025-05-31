@@ -1,0 +1,28 @@
+header
+  .top-bar
+    img.logo(src="/images/RvsD.png" alt="Logo")
+    form.search-form
+      input(type="text" placeholder="Tìm kiếm sản phẩm tại đây...")
+      button(type="submit") 🔍
+    .contact-info
+      span Hotline: 034 552 0558
+      span Email: rocamerastore@gmail.com
+
+  nav.menu
+    ul
+      li: a(href="/") Trang chủ
+      li: a(href="/may-anh") Máy ảnh
+      li: a(href="/ong-kinh") Ống kính
+      li: a(href="/phu-kien") Phụ kiện
+      li: a(href="/check-shot") Check Shot - Bảo Hành
+      li: a(href="/cong-dong") Cộng đồng
+      li: a(href="/gioi-thieu") Giới thiệu
+      if user
+        if user.role === 'admin'
+          li: a(href="/admin") Chào quý đại biểu #{user.name}
+        li: a(href="/logout") Đăng xuất
+        li: a(href="/api/orders/order-history") Bill
+      else
+        li: a(href="/login") Đăng nhập
+        li: a(href="/register") Đăng ký
+      li: a(href="/api/cart") 🛒 (#{cartCount || 0})

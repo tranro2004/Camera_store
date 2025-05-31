@@ -1,0 +1,120 @@
+extends layout
+
+block content
+  link(rel='stylesheet', href='/css/cart.css')
+
+  h1 Giỏ hàng của bạn
+  #cart-items
+    if cartItems && cartItems.length
+      table.table
+        thead
+          tr
+            th Tên sản phẩm
+            th Giá
+            th Số lượng
+            th Tổng
+            th Hành động
+        tbody
+          each item in cartItems
+            tr(data-price=item.price data-cart-item-id=item.cartItemId)
+              td= item.productName
+              td= item.price.toLocaleString('vi-VN') + ' đ'
+              td
+                button(data-id=item.cartItemId, onclick='updateQuantity(this, "decrease")') -
+                span(style='margin: 0 10px;')= item.quantity
+                button(data-id=item.cartItemId, onclick='updateQuantity(this, "increase")') +
+              td= item.total.toLocaleString('vi-VN') + ' đ'
+              td
+                button(data-id=item.cartItemId, onclick='removeCartItem(this)') Xóa
+      // Nút thanh toán
+      div(style='margin-top: 20px;')
+        button(onclick=`checkout('${cartId}')`) Thanh toán
+    else
+      p Giỏ hàng trống
+
+  script.
+    function checkout(cartId) {
+      window.location.href = `/api/orders/checkout?cartId=${cartId}`;
+    }
+
+    async function updateQuantity(button, action) {
+      const cartItemId = button.getAttribute('data-id');
+      const row = button.closest('tr');
+      const quantitySpan = button.parentElement.querySelector('span');
+      let currentQuantity = parseInt(quantitySpan.textContent);
+
+      if (action === 'decrease' && currentQuantity <= 1) {
+        return;
+      }
+
+      const newQuantity = action === 'increase' ? currentQuantity + 1 : currentQuantity - 1;
+
+      try {
+        const response = await fetch('/api/cart/update-quantity', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ cartItemId, quantity: newQuantity }),
+        });
+        const result = await response.json();
+
+        if (response.ok) {
+          quantitySpan.textContent = newQuantity;
+          const price = parseFloat(row.getAttribute('data-price')); // Lấy giá từ data-price
+          const totalCell = row.cells[3];
+          totalCell.textContent = (price * newQuantity).toLocaleString('vi-VN') + ' đ';
+
+          // Cập nhật số lượng trên navbar
+          const cartLink = document.querySelector('a[href="/cart"]');
+          if (cartLink) {
+            const currentCount = parseInt(cartLink.textContent.match(/\d+/)?.[0] || 0);
+            cartLink.textContent = `🛒 (${action === 'increase' ? currentCount + 1 : currentCount - 1})`;
+          }
+        } else {
+          alert(result.message || 'Lỗi khi cập nhật số lượng');
+        }
+      } catch (error) {
+        console.error('Error updating quantity:', error);
+        alert('Đã có lỗi xảy ra: ' + error.message);
+      }
+    }
+
+    async function removeCartItem(button) {
+      const cartItemId = button.getAttribute('data-id');
+      const row = button.closest('tr');
+      try {
+        const response = await fetch('/api/cart/remove-item', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ cartItemId }),
+        });
+        const result = await response.json();
+
+        if (response.ok) {
+          // Xóa hàng khỏi bảng
+          row.remove();
+
+          // Cập nhật số lượng trên navbar
+          const cartLink = document.querySelector('a[href="/cart"]');
+          if (cartLink) {
+            const currentCount = parseInt(cartLink.textContent.match(/\d+/)?.[0] || 0);
+            const quantityRemoved = parseInt(row.querySelector('span').textContent);
+            cartLink.textContent = `🛒 (${currentCount - quantityRemoved})`;
+          }
+
+          // Kiểm tra nếu không còn sản phẩm trong giỏ hàng
+          const remainingItems = document.querySelectorAll('#cart-items table tbody tr');
+          if (remainingItems.length === 0) {
+            document.querySelector('#cart-items').innerHTML = '<p>Giỏ hàng trống</p>';
+          }
+
+          alert('Sản phẩm đã được xóa khỏi giỏ hàng');
+        } else {
+          alert(result.message || 'Lỗi khi xóa sản phẩm');
+        }
+      } catch (error) {
+        console.error('Error removing item:', error);
+        alert('Đã có lỗi xảy ra: ' + error.message);
+      }
+    }
